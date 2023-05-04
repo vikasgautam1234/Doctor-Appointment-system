@@ -52,11 +52,11 @@ try {
         data:{
              name: user.name,
              email:user.email
-        }
+        }                                                              
     })
     }
 } catch (error) {
-    // console.log(error)
+    console.log(error)
      res.status(500).send({message:'auth error', success:false,error})
 }
 }
