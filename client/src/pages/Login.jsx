@@ -1,16 +1,23 @@
 import React from 'react'
 import {Form,Input, message} from "antd"
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { showLoading, hideLoading } from '../redux/features/alertSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import "../styles/RegisterStyles.css"
 const Login = () => {
+
   const navigate = useNavigate()  //useNavigate HOOK IS USED TO REDIRECT TO THE ANOTHER PAGE
+  const dispatch = useDispatch()  // this is a hook thats why we use it in a variable
+
   //form handler
   const onfinishHandler = async (values)=>{
     try{
+      dispatch(showLoading())
       //The axios.post method is used to send a POST request to the server. It takes two arguments: the URL to 
-      //which the request will be sent and an optional data object that contains the data to be sent with the request.
-         const res = await axios.post('/api/v1/user/login', values)
+      //which the request will be sent and an optional data object that contains the data to be sent with the request.   
+      const res = await axios.post('/api/v1/user/login', values)
+        dispatch(hideLoading())
          if(res.data.success){
           localStorage.setItem('token', res.data.token)  //it is used to store an authentication token that is returned by the server in the res.data.token property of the response object.
           message.success('Login Successfully')
@@ -19,6 +26,7 @@ const Login = () => {
           message.error(res.data.message)
          }
     }catch(error){
+      dispatch(hideLoading())  // use this here because in error also we don't want SPINNERS
       console.log(error)
       message.error('something went wrong')
     }

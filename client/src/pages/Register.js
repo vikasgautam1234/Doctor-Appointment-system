@@ -3,16 +3,20 @@ import {Form,Input, message} from "antd"
 import axios from 'axios'   // with the help of axios we can make NETWORK CALLS
 import { Link , useNavigate} from 'react-router-dom'
 import "../styles/RegisterStyles.css"
+import { useDispatch } from 'react-redux'
+import { showLoading, hideLoading } from '../redux/features/alertSlice'
 
 
 
 const Register = () => {
   const navigate = useNavigate() // we use this to navegate the register to the login page
-
+  const dispatch = useDispatch()
   //form handler
   const onfinishHandler = async (values)=>{
     try{
+      dispatch(showLoading())   // INITIALE REQUEST JAEGI TOH SPINNER SHOW HOGA
       const res = await axios.post('/api/v1/user/register',values)
+      dispatch(hideLoading())
       if(res.data.success){
         message.success('Register successfully')
         navigate('/login')    // IF REGISTER SUCCESSFULLY THEN REDIRECT IT TO THE LOGIN PAGE
@@ -20,6 +24,7 @@ const Register = () => {
         message.error(res.data.message)
       }
     }catch(error){
+      dispatch(hideLoading())     // use this here because in error also we don't want SPINNERS
       console.log(error)
       message.error('something went wrong')
     }
