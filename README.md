@@ -10,3 +10,4 @@
 
 
 <!-- GETTING USER DETAILS -->
+1- first we had created a file named userSlice.js and inside it created a slice for user 
