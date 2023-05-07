@@ -12,6 +12,22 @@ email: {
 password: {
     type: String,
     required: [true, 'password is required']
+},
+isAdmin:{
+    type: Boolean,
+    default: false
+},
+isDoctor: {
+    type: Boolean,
+    default: false    
+},
+notification:{
+    type: Array,
+    default: []    // firsty notification will be empty
+},
+seennotification: {
+    type: Array,
+    default: []
 }
 })
 

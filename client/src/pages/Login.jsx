@@ -17,6 +17,7 @@ const Login = () => {
       //The axios.post method is used to send a POST request to the server. It takes two arguments: the URL to 
       //which the request will be sent and an optional data object that contains the data to be sent with the request.   
       const res = await axios.post('/api/v1/user/login', values)
+      window.location.reload()
         dispatch(hideLoading())
          if(res.data.success){
           localStorage.setItem('token', res.data.token)  //it is used to store an authentication token that is returned by the server in the res.data.token property of the response object.
